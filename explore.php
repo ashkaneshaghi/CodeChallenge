@@ -20,9 +20,9 @@ if (isset($_GET['date'])){
 
 
 // Query for filters
-$participation_sql ='select ev.event_name, ev.event_date, em.employee_name, em.employee_mail, p.participation_fee from employee as em left join participation as p on p.employee_id = em.employee_id left join events as ev on p.event_id = ev.event_id order by event_date ASC';
+$participation_sql ='select ev.event_name, ev.event_date, em.employee_name, em.employee_mail, p.participation_fee from employee as em left join participation as p on p.employee_id = em.employee_id left join events as ev on p.event_id = ev.event_id where em.employee_name like "%'.$name.'%" and ev.event_name like "%'.$event.'%" and ev.event_date like "%'.$date.'%" order by event_date ASC';
 
-$participation_result = $conn->query($participation_sql) or die($conn->error);
+$participation_result = $conn->query($participation_sql);
 
 ?>
 
@@ -50,7 +50,10 @@ $participation_result = $conn->query($participation_sql) or die($conn->error);
 				<label for="date">Event Date :</label>
 				<input type="datetime" name="date" tabindex="3" autocomplete="on" size="100" autofocus placeholder="Enter event's date" /><br /><br />
 				<button type="submit" >Apply filters</button>
-			</form>	
+			</form>
+            <form action="explore.php" method="get">
+                <button type="submit" >Clear filters</button>
+            </form>
 		</fieldset>
 			<table width="900" border="1" align="center">
 				<tbody>
@@ -86,7 +89,7 @@ $participation_result = $conn->query($participation_sql) or die($conn->error);
 					?>
 					<tr>
 						<td colspan="5" align="center">Total Price :</td>
-						<td><?=$total_fee?></td>
+						<td><strong><?=$total_fee?></strong></td>
 					</tr>
 
 					<?PHP
