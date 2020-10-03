@@ -20,7 +20,16 @@ if (isset($_GET['date'])){
 
 
 // Query for filters
-$participation_sql ='select ev.event_name, ev.event_date, em.employee_name, em.employee_mail, p.participation_fee from employee as em left join participation as p on p.employee_id = em.employee_id left join events as ev on p.event_id = ev.event_id where em.employee_name like "%'.$name.'%" and ev.event_name like "%'.$event.'%" and ev.event_date like "%'.$date.'%" order by event_date ASC';
+$participation_sql ='select ev.event_name, ev.event_date, em.employee_name, em.employee_mail, p.participation_fee 
+					from employee as em 
+					left join participation as p on p.employee_id = em.employee_id 
+					left join events as ev on p.event_id = ev.event_id
+					where 
+					em.employee_name like "%'.$name.'%" 
+					and ev.event_name like "%'.$event.'%" 
+					and ev.event_date like "%'.$date.'%" 
+					order by 
+					event_date ASC';
 
 $participation_result = $conn->query($participation_sql);
 
